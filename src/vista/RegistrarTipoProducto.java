@@ -14,7 +14,6 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import servicio.ServicioTipoProducto;
-import util.Eliminar;
 
 /**
  *
@@ -22,6 +21,7 @@ import util.Eliminar;
  */
 public class RegistrarTipoProducto extends javax.swing.JInternalFrame {
 DefaultTableModel model;
+ServicioTipoProducto re=new ServicioTipoProducto();
     /**
      * Creates new form RegistrarTipoProducto
      */
@@ -339,7 +339,6 @@ DefaultTableModel model;
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarActionPerformed
-        ServicioTipoProducto re=new ServicioTipoProducto();
         try {
             TipoProducto tpro=new TipoProducto(txtnombre.getText(),txtdescripcion.getText());
             re.registroTipoProd(tpro);
@@ -418,8 +417,7 @@ DefaultTableModel model;
            {
                 String  cod=(String)tbtipop.getValueAt(filasel, 0);
                 try {
-                   Eliminar e=new Eliminar();
-                   e.eliminarTipoProd(cod);
+                   re.reliminarTipoProd(cod);
                    buscarTipoProd("");
                 } 
                 catch (Exception e) {

@@ -1,6 +1,7 @@
 package entidad.dao;
 import BaseDatos.Conexion;
 import entidad.Medida;
+import javax.swing.JOptionPane;
 public class MedidaDao {
     public void registrarMedida(Medida me) throws Exception{
         System.out.println("Empieza operacion Registra Medida");
@@ -22,5 +23,12 @@ public class MedidaDao {
             }
         }
         System.out.println("Finaliza operacion registrar");
+    }
+    public void eliminarMedida(String codigo) throws Exception{
+        Conexion.Conectar();
+        String sql="DELETE FROM unidadmedida WHERE idMedida='"+codigo+"'";
+        Conexion.Ejecutar(sql);
+        JOptionPane.showMessageDialog(null, "Registro Borrado");
+        Conexion.Desconectar();
     }
 }

@@ -14,7 +14,6 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import servicio.ServicioMedida;
-import util.Eliminar;
 
 /**
  *
@@ -22,6 +21,7 @@ import util.Eliminar;
  */
 public class RegistrarMedida extends javax.swing.JInternalFrame {
 DefaultTableModel model;
+ServicioMedida re=new ServicioMedida();
     /**
      * Creates new form RegistrarMedida
      */
@@ -339,7 +339,6 @@ DefaultTableModel model;
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarActionPerformed
-       ServicioMedida re=new ServicioMedida();
         try {
             Medida medida=new Medida(txtnombre.getText(),txtdescripcion.getText());
             re.registroMed(medida);
@@ -417,8 +416,7 @@ DefaultTableModel model;
            {
                 String  cod=(String)tbmedida.getValueAt(filasel, 0);
                 try {
-                   Eliminar e=new Eliminar();
-                   e.eliminarMedida(cod);
+                   re.eliminarMed(cod);
                    buscarMedida("");
                 } 
                 catch (Exception e) {
