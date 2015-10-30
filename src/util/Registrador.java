@@ -1,7 +1,7 @@
 package util;
 import BaseDatos.Conexion;
+import entidad.Medida;
 import entidad.Producto;
-import java.sql.ResultSet;
 public class Registrador {
     private int contador=0;
      public void registrarProducto(Producto p) throws Exception{
@@ -28,5 +28,26 @@ public class Registrador {
             }
         }
         System.out.println("Finaliza operación registrar");
+    }
+    public void registarMedida(Medida me) throws Exception{
+        System.out.println("Empieza operacion Registra Medida");
+        Conexion.Conectar();
+        String sql="INSERT INTO unidadmedida(medida,descripcion)"
+                +"VALUES('"+me.getMedida()+"',"
+                +"'"+me.getDescripcion()+"')";
+        System.out.println("Intentando registrar entidad de tipo "+me.getClass().getName());
+        try {
+            Conexion.Ejecutar(sql);
+            System.out.println("Medida Registrada");
+        } catch (Exception e) {
+            System.out.println("No se Puede Registrar Medida "+e.getMessage());
+        }finally{
+            try {
+                Conexion.Desconectar();
+            } catch (Exception e) {
+                System.out.println("No se Pudo Desconectar BD "+e.getMessage());
+            }
+        }
+        System.out.println("Finaliza operacion registrar");
     }
 }
