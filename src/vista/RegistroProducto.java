@@ -238,8 +238,6 @@ public class RegistroProducto extends javax.swing.JInternalFrame {
 
         jLabel7.setText("Tipo Producto");
 
-        txtmedida.setSelectedIndex(-1);
-
         jLabel9.setText("Contenido:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -401,7 +399,12 @@ public class RegistroProducto extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton6.setText("Buscar");
+        jButton6.setText("Mostrar Todo");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         tbproductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -582,6 +585,14 @@ public int Obtener1( String med) throws Exception{
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        try {
+            buscarProducto("");
+        } catch (Exception ex) {
+            Logger.getLogger(RegistroProducto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnactualizar;
