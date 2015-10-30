@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import servicio.ServicioPersona;
 import util.*;
 
 public class Cliente extends javax.swing.JInternalFrame {
@@ -246,12 +247,12 @@ public class Cliente extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        Registrador registrador = new Registrador();
+        ServicioPersona sp = new ServicioPersona();
         Validador verificador = new Validador();
         try{            
             Persona  p = new Persona(txtNombres.getText(),txtApellidos.getText(),Integer.parseInt(txtDni.getText()),txtEmail.getText());
                     verificador.validarDni(p);
-                    registrador.registrarCliente(p);
+                    sp.registroPer(p);
                     JOptionPane.showMessageDialog(this, "Cliente registrado exitosamente");
                 }
         catch(Exception e){
