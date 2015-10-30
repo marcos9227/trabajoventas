@@ -1,6 +1,7 @@
 package entidad.dao;
 import BaseDatos.Conexion;
 import entidad.TipoProducto;
+import javax.swing.JOptionPane;
 public class TipoProductoDao {
     public void registrarTipoProd(TipoProducto tp)throws Exception{
         System.out.println("Empieza operacion Registrar Tipo Producto");
@@ -21,5 +22,12 @@ public class TipoProductoDao {
             }
         }
         System.out.println("Finaliza operacion Registrar Tipo Producto");
-    } 
+    }
+    public void eliminarTipoProd(String codigo) throws Exception{
+        Conexion.Conectar();
+        String sql="DELETE FROM tipoproducto WHERE idTipoProd='"+codigo+"'";
+        Conexion.Ejecutar(sql);
+        JOptionPane.showMessageDialog(null, "Registro Borrado");
+        Conexion.Desconectar();
+    }
 }

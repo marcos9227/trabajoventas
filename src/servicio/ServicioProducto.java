@@ -7,4 +7,9 @@ public class ServicioProducto {
                 miProductoDao = new ProductoDao();				
                 miProductoDao.registrarProducto(miProducto);
     }
+    public void eliminarPro(String cod)throws Exception{
+        ProductoDao miProductoDao;
+                miProductoDao = new ProductoDao();				
+                miProductoDao.eliminarProdcuto(cod);
+    }
 }

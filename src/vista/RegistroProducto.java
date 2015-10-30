@@ -14,7 +14,6 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import servicio.ServicioProducto;
-import util.Eliminar;
 import util.Validador;
 
 
@@ -24,6 +23,7 @@ import util.Validador;
  */
 public class RegistroProducto extends javax.swing.JInternalFrame {
     DefaultTableModel model;
+    ServicioProducto servicio = new ServicioProducto();
     int codigo=0;
     int codigo1=0;
     /**
@@ -484,8 +484,7 @@ public int Obtener1( String med) throws Exception{
         return codigo1;
 }
     private void btnguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarActionPerformed
-        ServicioProducto servicio = new ServicioProducto();
-        Validador verificador = new Validador();
+            Validador verificador = new Validador();
                 try{
                     String med=(String) txtmedida.getSelectedItem();
                     String nombre=(String) txttpro.getSelectedItem();
@@ -555,8 +554,7 @@ public int Obtener1( String med) throws Exception{
            {
                 String  cod=(String)tbproductos.getValueAt(filasel, 0);
                 try {
-                   Eliminar e=new Eliminar();
-                   e.eliminarProdcuto(cod);
+                   servicio.eliminarPro(cod);
                    buscarProducto("");
                 } 
                 catch (Exception e) {

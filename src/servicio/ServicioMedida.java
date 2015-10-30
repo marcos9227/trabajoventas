@@ -7,4 +7,9 @@ public class ServicioMedida {
                 miMedidaDao = new MedidaDao();				
                 miMedidaDao.registrarMedida(miMedida);
     }
+    public void eliminarMed(String cod)throws Exception{
+        MedidaDao miMedidaDao;
+                miMedidaDao = new MedidaDao();				
+                miMedidaDao.eliminarMedida(cod);
+    }
 }
