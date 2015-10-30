@@ -16,4 +16,11 @@ public class Eliminar {
         JOptionPane.showMessageDialog(null, "Registro Borrado");
         Conexion.Desconectar();
     }
+    public void eliminarTipoProd(String codigo) throws Exception{
+        Conexion.Conectar();
+        String sql="DELETE FROM tipoproducto WHERE idTipoProd='"+codigo+"'";
+        Conexion.Ejecutar(sql);
+        JOptionPane.showMessageDialog(null, "Registro Borrado");
+        Conexion.Desconectar();
+    }
 }

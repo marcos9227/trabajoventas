@@ -7,7 +7,7 @@
 package vista;
 
 import BaseDatos.Conexion;
-import entidad.Medida;
+import entidad.TipoProducto;
 import java.sql.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,18 +20,18 @@ import util.Registrador;
  *
  * @author FAMILIA RIVAS MAZA
  */
-public class RegistrarMedida extends javax.swing.JInternalFrame {
+public class RegistrarTipoProducto extends javax.swing.JInternalFrame {
 DefaultTableModel model;
     /**
-     * Creates new form RegistrarMedida
+     * Creates new form RegistrarTipoProducto
      */
-    public RegistrarMedida() {
+    public RegistrarTipoProducto() {
         initComponents();
         this.setLocation(140,12 );
         txtcodigo.setEnabled(false);
         bloquear();
         try {
-            buscarMedida("");
+            buscarTipoProd("");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
@@ -57,11 +57,11 @@ DefaultTableModel model;
         btnnuevo.setEnabled(false);
         btncancelar.setEnabled(true);
     }
-    public void buscarMedidaEditar(int codi) throws Exception{
+    public void buscarTipoProdEditar(int codi) throws Exception{
            Conexion.Conectar();
             String nom="",desc="";
             int cod=0;
-            String cons="select * from unidadmedida WHERE idMedida='"+codi+"'";
+            String cons="select * from tipoproducto WHERE idTipoProd='"+codi+"'";
             ResultSet rs = Conexion.Consultar(cons);
             while(rs.next())
             {
@@ -74,12 +74,12 @@ DefaultTableModel model;
             txtdescripcion.append(desc);
             Conexion.Desconectar();
     }
-    public void buscarMedida(String buscar) throws Exception{
+    public void buscarTipoProd(String buscar) throws Exception{
         Conexion.Conectar();
-        String titulos[]={"ID","Medida","Descripcion"};
+        String titulos[]={"ID","Nombre","Descripcion"};
         String registros[]=new String[3];
         model=new DefaultTableModel(null,titulos);
-        String sql="SELECT * FROM unidadmedida WHERE CONCAT (medida,'') LIKE '%"+buscar+"%'";
+        String sql="SELECT * FROM tipoproducto WHERE CONCAT (tipoProd,'') LIKE '%"+buscar+"%'";
         ResultSet rs=Conexion.Consultar(sql);
         while(rs.next()){
             registros[0]=rs.getString(1);
@@ -87,10 +87,10 @@ DefaultTableModel model;
             registros[2]=rs.getString(3);
             model.addRow(registros);
         }
-        tbmedida.setModel(model);
-        tbmedida.getColumnModel().getColumn(0).setPreferredWidth(150);
-        tbmedida.getColumnModel().getColumn(1).setPreferredWidth(300);
-        tbmedida.getColumnModel().getColumn(2).setPreferredWidth(100);
+        tbtipop.setModel(model);
+        tbtipop.getColumnModel().getColumn(0).setPreferredWidth(150);
+        tbtipop.getColumnModel().getColumn(1).setPreferredWidth(300);
+        tbtipop.getColumnModel().getColumn(2).setPreferredWidth(100);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -106,23 +106,23 @@ DefaultTableModel model;
         meliminar = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txtnombre = new javax.swing.JTextField();
+        txtcodigo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        txtnombre = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtdescripcion = new javax.swing.JTextArea();
         jLabel4 = new javax.swing.JLabel();
-        txtcodigo = new javax.swing.JTextField();
+        txtbuscar = new javax.swing.JTextField();
+        btnbuscar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         btnnuevo = new javax.swing.JButton();
         btnguardar = new javax.swing.JButton();
         btnactualizar = new javax.swing.JButton();
         btncancelar = new javax.swing.JButton();
         btnsalir = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        txtbuscar = new javax.swing.JTextField();
-        btnbuscar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tbmedida = new javax.swing.JTable();
+        tbtipop = new javax.swing.JTable();
 
         mactualizar.setText("Modificar");
         mactualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -143,19 +143,19 @@ DefaultTableModel model;
         setClosable(true);
         setIconifiable(true);
         setResizable(true);
-        setTitle("Registrar Medida");
+        setTitle("Registro Tipo Producto");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Registro Medida"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Registro Tipo Producto"));
 
-        jLabel1.setText("Medida:");
+        jLabel1.setText("Codigo:");
 
-        jLabel2.setText("Descripcion:");
+        jLabel2.setText("Nombre:");
+
+        jLabel3.setText("Descripcion:");
 
         txtdescripcion.setColumns(20);
         txtdescripcion.setRows(5);
         jScrollPane1.setViewportView(txtdescripcion);
-
-        jLabel4.setText("Codigo:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -164,37 +164,50 @@ DefaultTableModel model;
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtcodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtcodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel3)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
+                    .addComponent(jLabel1)
                     .addComponent(txtcodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(14, 14, 14)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1))
-                .addContainerGap())
+                    .addComponent(jLabel2)
+                    .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(22, Short.MAX_VALUE))
         );
+
+        jLabel4.setText("Buscar");
+
+        txtbuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtbuscarKeyReleased(evt);
+            }
+        });
+
+        btnbuscar.setText("Mostrar Todo");
+        btnbuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnbuscarActionPerformed(evt);
+            }
+        });
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Acciones"));
 
@@ -219,7 +232,7 @@ DefaultTableModel model;
             }
         });
 
-        btncancelar.setText("Cancelar");
+        btncancelar.setText("cancelar");
         btncancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btncancelarActionPerformed(evt);
@@ -237,53 +250,39 @@ DefaultTableModel model;
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(btnsalir)
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addGap(4, 4, 4)
-                            .addComponent(btnnuevo))
-                        .addComponent(btnactualizar)
-                        .addComponent(btnguardar))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addGap(10, 10, 10)
-                            .addComponent(btnsalir))
-                        .addComponent(btncancelar, javax.swing.GroupLayout.Alignment.TRAILING)))
-                .addGap(19, 19, 19))
+                .addContainerGap(21, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnactualizar)
+                    .addComponent(btncancelar)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnnuevo)
+                            .addComponent(btnguardar))))
+                .addGap(16, 16, 16))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(6, 6, 6)
                 .addComponent(btnnuevo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(11, 11, 11)
                 .addComponent(btnguardar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btnactualizar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btncancelar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btnsalir)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLabel3.setText("Buscar: ");
-
-        txtbuscar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtbuscarKeyReleased(evt);
-            }
-        });
-
-        btnbuscar.setText("Mostrar Todo");
-        btnbuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnbuscarActionPerformed(evt);
-            }
-        });
-
-        tbmedida.setModel(new javax.swing.table.DefaultTableModel(
+        tbtipop.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -294,44 +293,45 @@ DefaultTableModel model;
 
             }
         ));
-        tbmedida.setComponentPopupMenu(jPopupMenu1);
-        jScrollPane2.setViewportView(tbmedida);
+        tbtipop.setComponentPopupMenu(jPopupMenu1);
+        jScrollPane2.setViewportView(tbtipop);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(85, 85, 85)
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnbuscar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(79, 79, 79)
-                        .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnbuscar)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addContainerGap()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
                     .addComponent(txtbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnbuscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -339,15 +339,16 @@ DefaultTableModel model;
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarActionPerformed
-       Registrador re=new Registrador();
+        Registrador re=new Registrador();
         try {
-            Medida medida=new Medida(txtnombre.getText(),txtdescripcion.getText());
-            re.registarMedida(medida);
-            buscarMedida("");
+            TipoProducto tpro=new TipoProducto(txtnombre.getText(),txtdescripcion.getText());
+            re.registrarTipoProd(tpro);
+            JOptionPane.showMessageDialog(this, "Tipo Producto registrado exitosamente");
+            buscarTipoProd("");
             limpiar();
             bloquear();
-            JOptionPane.showMessageDialog(this, "Producto registrado exitosamente");
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }//GEN-LAST:event_btnguardarActionPerformed
 
@@ -355,18 +356,32 @@ DefaultTableModel model;
         desbloquear();
     }//GEN-LAST:event_btnnuevoActionPerformed
 
+    private void btnactualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnactualizarActionPerformed
+        try {
+        Conexion.Conectar();
+        String sql="UPDATE tipoproducto SET tipoProd = '"+txtnombre.getText()+"',descripcion ='"+txtdescripcion.getText()+"' WHERE idTIpoProd = '"+txtcodigo.getText()+"'";
+        Conexion.Ejecutar(sql);
+       JOptionPane.showMessageDialog(null, "Actualizado");
+       buscarTipoProd("");
+       limpiar();
+       bloquear();
+    } catch (Exception e) {
+         JOptionPane.showMessageDialog(null, e);
+    }
+    }//GEN-LAST:event_btnactualizarActionPerformed
+
     private void btncancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncancelarActionPerformed
         bloquear();
         limpiar();
     }//GEN-LAST:event_btncancelarActionPerformed
 
     private void btnsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsalirActionPerformed
-       this.dispose();
+        this.dispose();
     }//GEN-LAST:event_btnsalirActionPerformed
 
     private void txtbuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtbuscarKeyReleased
         try {
-            buscarMedida(txtbuscar.getText());
+            buscarTipoProd(txtbuscar.getText());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
@@ -375,7 +390,7 @@ DefaultTableModel model;
     private void mactualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mactualizarActionPerformed
         limpiar();
         try {
-        int filaMod=tbmedida.getSelectedRow();
+        int filaMod=tbtipop.getSelectedRow();
         if(filaMod==-1)
         {
         JOptionPane.showMessageDialog(null, "Seleccione alguna fila");
@@ -385,41 +400,27 @@ DefaultTableModel model;
         desbloquear();
         btnactualizar.setEnabled(true);
         btnguardar.setEnabled(false);
-        int cod=Integer.parseInt((String) tbmedida.getValueAt(filaMod, 0));
-        buscarMedidaEditar(cod);
+        int cod=Integer.parseInt((String) tbtipop.getValueAt(filaMod, 0));
+        buscarTipoProdEditar(cod);
         }
     } catch (Exception e) {
             System.out.println(e.getMessage());
     }
     }//GEN-LAST:event_mactualizarActionPerformed
 
-    private void btnactualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnactualizarActionPerformed
-        try {
-        Conexion.Conectar();
-        String sql="UPDATE unidadmedida SET medida = '"+txtnombre.getText()+"',descripcion ='"+txtdescripcion.getText()+"' WHERE idMedida = '"+txtcodigo.getText()+"'";
-        Conexion.Ejecutar(sql);
-       JOptionPane.showMessageDialog(null, "Actualizado");
-       buscarMedida("");
-       limpiar();
-       bloquear();
-    } catch (Exception e) {
-         JOptionPane.showMessageDialog(null, e);
-    }
-    }//GEN-LAST:event_btnactualizarActionPerformed
-
     private void meliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_meliminarActionPerformed
-        int filasel= tbmedida.getSelectedRow();
+      int filasel= tbtipop.getSelectedRow();
            if(filasel==-1)
            {
             JOptionPane.showMessageDialog(null, "Seleccione algun dato");
            }
            else
            {
-                String  cod=(String)tbmedida.getValueAt(filasel, 0);
+                String  cod=(String)tbtipop.getValueAt(filasel, 0);
                 try {
                    Eliminar e=new Eliminar();
-                   e.eliminarMedida(cod);
-                   buscarMedida("");
+                   e.eliminarTipoProd(cod);
+                   buscarTipoProd("");
                 } 
                 catch (Exception e) {
                    JOptionPane.showMessageDialog(null, e.getMessage());
@@ -429,7 +430,7 @@ DefaultTableModel model;
 
     private void btnbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarActionPerformed
         try {
-            buscarMedida("");
+            buscarTipoProd("");
         } catch (Exception ex) {
             Logger.getLogger(RegistroProducto.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -454,7 +455,7 @@ DefaultTableModel model;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JMenuItem mactualizar;
     private javax.swing.JMenuItem meliminar;
-    private javax.swing.JTable tbmedida;
+    private javax.swing.JTable tbtipop;
     private javax.swing.JTextField txtbuscar;
     private javax.swing.JTextField txtcodigo;
     private javax.swing.JTextArea txtdescripcion;
