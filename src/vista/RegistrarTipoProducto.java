@@ -13,8 +13,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import servicio.ServicioTipoProducto;
 import util.Eliminar;
-import util.Registrador;
 
 /**
  *
@@ -339,10 +339,10 @@ DefaultTableModel model;
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarActionPerformed
-        Registrador re=new Registrador();
+        ServicioTipoProducto re=new ServicioTipoProducto();
         try {
             TipoProducto tpro=new TipoProducto(txtnombre.getText(),txtdescripcion.getText());
-            re.registrarTipoProd(tpro);
+            re.registroTipoProd(tpro);
             JOptionPane.showMessageDialog(this, "Tipo Producto registrado exitosamente");
             buscarTipoProd("");
             limpiar();

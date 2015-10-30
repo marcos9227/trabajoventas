@@ -13,8 +13,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import servicio.ServicioMedida;
 import util.Eliminar;
-import util.Registrador;
 
 /**
  *
@@ -339,10 +339,10 @@ DefaultTableModel model;
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarActionPerformed
-       Registrador re=new Registrador();
+       ServicioMedida re=new ServicioMedida();
         try {
             Medida medida=new Medida(txtnombre.getText(),txtdescripcion.getText());
-            re.registarMedida(medida);
+            re.registroMed(medida);
             buscarMedida("");
             limpiar();
             bloquear();

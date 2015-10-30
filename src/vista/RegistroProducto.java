@@ -13,8 +13,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import servicio.ServicioProducto;
 import util.Eliminar;
-import util.Registrador;
 import util.Validador;
 
 
@@ -484,7 +484,7 @@ public int Obtener1( String med) throws Exception{
         return codigo1;
 }
     private void btnguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarActionPerformed
-        Registrador registrador = new Registrador();
+        ServicioProducto servicio = new ServicioProducto();
         Validador verificador = new Validador();
                 try{
                     String med=(String) txtmedida.getSelectedItem();
@@ -496,7 +496,7 @@ public int Obtener1( String med) throws Exception{
                         Integer.parseInt(txtstock.getText()), Double.parseDouble(txtcontenido.getText()),
                         resultado1, txtimagen.getText(),resultado);
                     verificador.validarStock(producto);
-                    registrador.registrarProducto(producto);
+                    servicio.registroPro(producto);
                     buscarProducto("");
                     JOptionPane.showMessageDialog(this, "Producto registrado exitosamente");
                     bloquear();
