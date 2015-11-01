@@ -6,17 +6,24 @@ import java.util.Date;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import servicio.ServicioBoleta;
+import servicio.ServicioProducto;
+import java.util.Calendar;
+import entidad.Boleta;
 
-public class Boleta extends javax.swing.JInternalFrame {
+public class VBoleta extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form Boleta
      */
-    public Boleta() throws Exception {
+    public VBoleta() throws Exception {
         initComponents();
         txtFecha.setText(fecha());
         numboleta();
     }
+
     
     public void numboleta() throws Exception{        
         try {
@@ -34,7 +41,7 @@ public class Boleta extends javax.swing.JInternalFrame {
              txtnum.setText(""+(j+1));
             }
         } catch (SQLException ex) {
-           Logger.getLogger(Boleta.class.getName()).log(Level.SEVERE, null, ex);
+           Logger.getLogger(VBoleta.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     /**
@@ -70,13 +77,15 @@ public class Boleta extends javax.swing.JInternalFrame {
         jLabel11 = new javax.swing.JLabel();
         txtFecha = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
+        txtId = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
-        jButton3 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        tblBoleta = new javax.swing.JTable();
+        btnCalcular = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        btnVenta = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        txtTotal = new javax.swing.JTextField();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -259,6 +268,14 @@ public class Boleta extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel12.setText("Id :");
+
+        txtId.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        txtId.setForeground(new java.awt.Color(255, 255, 255));
+        txtId.setDisabledTextColor(new java.awt.Color(255, 0, 0));
+        txtId.setEnabled(false);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -266,22 +283,25 @@ public class Boleta extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel10))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel10))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel3Layout.createSequentialGroup()
                             .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(txtNombres, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton1))))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addGap(18, 18, 18)
+                            .addGap(32, 32, 32)
+                            .addComponent(jLabel12)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addComponent(txtNombres, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(jButton1)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(60, 60, 60)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton2)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -294,9 +314,13 @@ public class Boleta extends javax.swing.JInternalFrame {
                     .addComponent(txtNombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel12))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel10)))
                 .addGap(8, 8, 8)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -305,24 +329,36 @@ public class Boleta extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        tblBoleta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "IdProducto", "Producto", "Precio Unitario", "Cantidad", "Precio Venta"
+                "ID", "NOMBRE", "CONTENIDO", "PRECIO", "CANTIDAD", "PRECIO VENTA"
             }
         ));
-        jScrollPane3.setViewportView(jTable3);
+        jScrollPane3.setViewportView(tblBoleta);
 
-        jButton3.setText("Calcular");
+        btnCalcular.setText("Calcular");
+        btnCalcular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCalcularActionPerformed(evt);
+            }
+        });
 
-        jButton5.setText("Eliminar ");
+        btnEliminar.setText("Eliminar ");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
-        jButton6.setText("Realizar venta");
+        btnVenta.setText("Realizar venta");
+        btnVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVentaActionPerformed(evt);
+            }
+        });
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel13.setText("Total :");
@@ -346,12 +382,12 @@ public class Boleta extends javax.swing.JInternalFrame {
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jLabel13)
                                     .addGap(18, 18, 18)
-                                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE))))
+                                .addComponent(btnCalcular, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnVenta, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -367,11 +403,11 @@ public class Boleta extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(143, 143, 143)
-                        .addComponent(jButton3)
+                        .addComponent(btnCalcular)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton5)
+                        .addComponent(btnEliminar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton6))
+                        .addComponent(btnVenta))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -379,7 +415,7 @@ public class Boleta extends javax.swing.JInternalFrame {
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -395,26 +431,133 @@ public class Boleta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       Productos p= new Productos();
-        MenuPrincipal.jdpescritorio.add(p);
-        p.toFront();
-        p.setVisible(true);
+       Productos p;
+        try {
+            p = new Productos();
+            MenuPrincipal.jdpescritorio.add(p);
+            p.toFront();
+            p.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(VBoleta.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
-public static String fecha(){
-    Date fecha= new Date();
-    SimpleDateFormat formatofecha= new SimpleDateFormat("dd/MM/YYYY");
-    return formatofecha.format(fecha);
-}
+
+    private void btnCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcularActionPerformed
+        if(tblBoleta.getRowCount()<1){
+            JOptionPane.showMessageDialog(null,"Ingrese un producto a la tabla");
+        }else{
+            calcular();
+        }
+    }//GEN-LAST:event_btnCalcularActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        DefaultTableModel mod=(DefaultTableModel)tblBoleta.getModel();
+        int fila= tblBoleta.getSelectedRow();
+        if(fila>=0){
+            mod.removeRow(fila);
+        }else{
+            JOptionPane.showMessageDialog(null,"No se ha seleccionado ningun producto");
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentaActionPerformed
+        if(txtId.equals("")||txtTotal.equals("")){
+            JOptionPane.showMessageDialog(null,"Ingrese cliente o producto");
+        }else{
+             String capcod="",capcant="";  
+             ServicioProducto sp= new ServicioProducto();
+             ServicioBoleta sb= new ServicioBoleta();
+             Boleta bol= new Boleta(Integer.parseInt(txtnum.getText()),txtFecha.getText(),hora(),Integer.parseInt("1"),Integer.parseInt(txtId.getText()),Double.parseDouble(txtTotal.getText()));
+                try {           
+                for (int i = 0; i <VBoleta.tblBoleta.getRowCount(); i++) {
+                capcod=VBoleta.tblBoleta.getValueAt(i,0).toString();
+                capcant=VBoleta.tblBoleta.getValueAt(i,4).toString();  
+                    sp.desStock(capcod, capcant);
+                }
+                } catch (Exception ex) {
+                    Logger.getLogger(Boleta.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            
+            try {
+                sb.regBoleta(bol);
+                detalleBoleta();
+                limpiar();
+                numboleta();
+            } catch (Exception ex) {
+                Logger.getLogger(VBoleta.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btnVentaActionPerformed
+    public static String fecha(){
+        Date fecha= new Date();
+        SimpleDateFormat formatofecha= new SimpleDateFormat("YYYY-MM-dd");
+        return formatofecha.format(fecha);
+    }
+    public String hora(){
+        String h="";
+        int hora, minutos, segundos;
+        Calendar calendario = Calendar.getInstance();
+        hora =calendario.get(Calendar.HOUR_OF_DAY);
+        minutos = calendario.get(Calendar.MINUTE);
+        segundos = calendario.get(Calendar.SECOND);     
+        h=hora+" : "+minutos+" : "+segundos;
+        return h;
+    }
+    public void calcular(){
+        String pre,can;
+        double subtotal=0,precio,imp=0.0;
+        int cantidad;
+        
+        for(int i=0;i<tblBoleta.getRowCount();i++){
+            pre=tblBoleta.getValueAt(i, 3).toString();
+            can=tblBoleta.getValueAt(i, 4).toString();
+            precio=Double.parseDouble(pre);
+            cantidad=Integer.parseInt(can);
+            imp=precio*cantidad;
+            subtotal=subtotal+imp;   
+            tblBoleta.setValueAt(Math.rint(imp*100)/100, i, 5);   
+        }  
+        txtTotal.setText(""+Math.rint(subtotal*100)/100);      
+    }
+    public void detalleBoleta() throws Exception{
+        Conexion.Conectar();
+        for(int i=0;i<tblBoleta.getRowCount();i++){
+            int numbol=Integer.parseInt(txtnum.getText());
+            int codpro=Integer.parseInt(tblBoleta.getValueAt(i, 0).toString());
+            int cant=Integer.parseInt(tblBoleta.getValueAt(i, 4).toString());
+            double preunit=Double.parseDouble(tblBoleta.getValueAt(i, 3).toString());
+            double preven=Double.parseDouble(tblBoleta.getValueAt(i, 5).toString());
+        String InsertarSQL="INSERT INTO detalleboleta(idBoleta,idProducto,cantidad,precioUnit,precioVenta) VALUES ("+numbol+","+codpro+","+cant+","+preunit+","+preven+")";      
+        try {
+           Conexion.Ejecutar(InsertarSQL);
+        } catch (SQLException ex) {
+            Logger.getLogger(Boleta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       }
+    }
+    public void limpiar(){
+        txtDni.setText("");
+        txtNombres.setText("");
+        txtTotal.setText("");
+        txtId.setText("");
+        DefaultTableModel modelo = (DefaultTableModel) tblBoleta.getModel();
+        int a =tblBoleta.getRowCount()-1;
+        int i;
+        for(i=a;i>=0;i--){
+            modelo.removeRow(i);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCalcular;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnVenta;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -432,11 +575,12 @@ public static String fecha(){
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
-    private javax.swing.JTextField jTextField5;
+    public static javax.swing.JTable tblBoleta;
     public static javax.swing.JTextField txtDni;
     private javax.swing.JTextField txtFecha;
+    public static javax.swing.JTextField txtId;
     public static javax.swing.JTextField txtNombres;
+    private javax.swing.JTextField txtTotal;
     private javax.swing.JTextField txtnum;
     // End of variables declaration//GEN-END:variables
 }

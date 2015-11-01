@@ -12,4 +12,8 @@ public class ServicioProducto {
                 miProductoDao = new ProductoDao();				
                 miProductoDao.eliminarProdcuto(cod);
     }
+    public void desStock(String cod, String can) throws Exception{
+        ProductoDao miProductoDao= new ProductoDao();
+            miProductoDao.descontarStock(cod, can);
+    }
 }

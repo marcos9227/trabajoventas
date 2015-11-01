@@ -146,9 +146,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-       Boleta bol;
+       VBoleta bol;
         try {
-            bol = new Boleta();
+            bol = new VBoleta();
             jdpescritorio.add(bol);
             bol.show();
         } catch (Exception ex) {
