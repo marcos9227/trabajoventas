@@ -1,6 +1,7 @@
 package entidad.dao;
 import BaseDatos.Conexion;
 import entidad.Producto;
+import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 public class ProductoDao {
     public void registrarProducto(Producto p) throws Exception{
@@ -34,5 +35,25 @@ public class ProductoDao {
         Conexion.Ejecutar(sql);
         JOptionPane.showMessageDialog(null, "Registro Borrado");
         Conexion.Desconectar();
+    }
+        public void descontarStock(String cod,String can) throws Exception{
+        Conexion.Conectar();
+        int des = Integer.parseInt(can);
+       String cap="";
+       int desfinal;
+       String sql="SELECT * FROM producto WHERE  idProducto='"+cod+"'";
+        try {
+            ResultSet rs= Conexion.Consultar(sql);
+            while(rs.next()){
+                cap= rs.getString(4);
+            }
+        } catch (Exception e) {
+        }
+        desfinal=Integer.parseInt(cap)-des;
+        String modi="UPDATE producto SET stock='"+desfinal+"' WHERE idProducto = '"+cod+"'";
+        try {
+            Conexion.Ejecutar(modi);
+        } catch (Exception e) {
+        }
     }
 }
