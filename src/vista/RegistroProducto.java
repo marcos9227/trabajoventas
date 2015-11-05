@@ -562,19 +562,19 @@ public int Obtener1( String med) throws Exception{
 
     private void btnactualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnactualizarActionPerformed
         try {
-        String med=(String) txtmedida.getSelectedItem();
-        String nombre=(String) txttpro.getSelectedItem();
-        int resultado=Obtener(nombre);
-        int resultado1=Obtener1(med);
-        Conexion.Conectar();
-        String sql="UPDATE producto SET precio = '"+txtprecio.getText()+"',nombreProd ='"+txtnombre.getText()+"',stock = '"+txtstock.getText()+"',contenido='"+txtcontenido.getText()+"',idMedida='"+resultado+"',img='"+txtimagen.getText()+"',idTipoProd='"+resultado1+"' WHERE idProducto = '"+txtcodigo.getText()+"'";
-        Conexion.Ejecutar(sql);
-       JOptionPane.showMessageDialog(null, "Actualizado");
-       buscarProducto("");
-       bloquear();
-    } catch (Exception e) {
-         JOptionPane.showMessageDialog(null, e);
-    }
+            String med=(String) txtmedida.getSelectedItem();
+            String nombre=(String) txttpro.getSelectedItem();
+            int resultado=Obtener(nombre);
+            int resultado1=Obtener1(med);
+            Conexion.Conectar();
+            String sql="UPDATE producto SET precio = '"+txtprecio.getText()+"',nombreProd ='"+txtnombre.getText()+"',stock = '"+txtstock.getText()+"',contenido='"+txtcontenido.getText()+"',idMedida='"+resultado+"',img='"+txtimagen.getText()+"',idTipoProd='"+resultado1+"' WHERE idProducto = '"+txtcodigo.getText()+"'";
+            Conexion.Ejecutar(sql);
+            JOptionPane.showMessageDialog(null, "Actualizado");
+            buscarProducto("");
+            bloquear();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
     }//GEN-LAST:event_btnactualizarActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed

@@ -380,6 +380,12 @@ public class VBoleta extends javax.swing.JInternalFrame {
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel13.setText("Total :");
 
+        txtTotal.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        txtTotal.setForeground(new java.awt.Color(255, 51, 0));
+        txtTotal.setCaretColor(new java.awt.Color(255, 0, 0));
+        txtTotal.setDisabledTextColor(new java.awt.Color(255, 0, 0));
+        txtTotal.setEnabled(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -436,15 +442,16 @@ public class VBoleta extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
                     .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Cliente cl= new Cliente();
+        Clientes cl= new Clientes();
         MenuPrincipal.jdpescritorio.add(cl);
+        MenuVendedor.jdpescritorio1.add(cl);
         cl.toFront();
         cl.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -454,6 +461,7 @@ public class VBoleta extends javax.swing.JInternalFrame {
         try {
             p = new Productos();
             MenuPrincipal.jdpescritorio.add(p);
+            MenuVendedor.jdpescritorio1.add(p);
             p.toFront();
             p.setVisible(true);
         } catch (Exception ex) {
@@ -480,31 +488,35 @@ public class VBoleta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentaActionPerformed
-        if(txtId.equals("")||txtTotal.equals("")){
-            JOptionPane.showMessageDialog(null,"Ingrese cliente o producto");
-        }else{
-             String capcod="",capcant="";  
-             ServicioProducto sp= new ServicioProducto();
-             ServicioBoleta sb= new ServicioBoleta();
-             Boleta bol= new Boleta(Integer.parseInt(txtnum.getText()),txtFecha.getText(),hora(),Integer.parseInt("1"),Integer.parseInt(txtId.getText()),Double.parseDouble(txtTotal.getText()));
-                try {           
-                for (int i = 0; i <VBoleta.tblBoleta.getRowCount(); i++) {
-                capcod=VBoleta.tblBoleta.getValueAt(i,0).toString();
-                capcant=VBoleta.tblBoleta.getValueAt(i,4).toString();  
-                    sp.desStock(capcod, capcant);
-                }
+        try {
+            if(txtId.equals("")||txtTotal.equals("")){
+                JOptionPane.showMessageDialog(null,"Ingrese cliente o producto");
+            }else{
+                String capcod="",capcant="";  
+                ServicioProducto sp= new ServicioProducto();
+                ServicioBoleta sb= new ServicioBoleta();
+                Boleta bol= new Boleta(Integer.parseInt(txtnum.getText()),txtFecha.getText(),hora(),Integer.parseInt("1"),Integer.parseInt(txtId.getText()),Double.parseDouble(txtTotal.getText()));
+                   try {           
+                   for (int i = 0; i <VBoleta.tblBoleta.getRowCount(); i++) {
+                   capcod=VBoleta.tblBoleta.getValueAt(i,0).toString();
+                   capcant=VBoleta.tblBoleta.getValueAt(i,4).toString();  
+                   sp.desStock(capcod, capcant);
+                   }
+                   JOptionPane.showMessageDialog(null, "Venta Realizada");
+                   } catch (Exception ex) {
+                       Logger.getLogger(Boleta.class.getName()).log(Level.SEVERE, null, ex);
+                   }
+                try {
+                    sb.regBoleta(bol);
+                    detalleBoleta();
+                    limpiar();
+                    numboleta();
                 } catch (Exception ex) {
-                    Logger.getLogger(Boleta.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(VBoleta.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            
-            try {
-                sb.regBoleta(bol);
-                detalleBoleta();
-                limpiar();
-                numboleta();
-            } catch (Exception ex) {
-                Logger.getLogger(VBoleta.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Verifica Datos ");
         }
     }//GEN-LAST:event_btnVentaActionPerformed
     public static String fecha(){

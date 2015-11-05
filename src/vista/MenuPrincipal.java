@@ -42,13 +42,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -83,14 +82,26 @@ public class MenuPrincipal extends javax.swing.JFrame {
                     .addGroup(jdpescritorioLayout.createSequentialGroup()
                         .addGap(26, 26, 26)
                         .addComponent(jLabel1)))
-                .addContainerGap(307, Short.MAX_VALUE))
+                .addContainerGap(302, Short.MAX_VALUE))
         );
         jdpescritorio.setLayer(recibe, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jdpescritorio.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        jMenu1.setText("File");
+        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1446765939_gnome-session-halt.png"))); // NOI18N
+        jMenu1.setText("Cerrar Sesion");
+
+        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cerrar.gif"))); // NOI18N
+        jMenuItem5.setText("Cerrar");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem5);
+
         jMenuBar1.add(jMenu1);
 
+        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1446775941_xfce-system-settings.png"))); // NOI18N
         jMenu2.setText("Mantenimiento");
 
         jMenuItem1.setText("Productos");
@@ -102,6 +113,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenu2.add(jMenuItem1);
 
         jMenuItem2.setText("Cliente");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem2);
 
         jMenuItem3.setText("Medida");
@@ -121,18 +137,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenu2.add(jMenuItem4);
 
         jMenuBar1.add(jMenu2);
-
-        jMenu3.setText("Ventas");
-
-        jMenuItem5.setText("Registrar Venta");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
-            }
-        });
-        jMenu3.add(jMenuItem5);
-
-        jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
 
@@ -172,25 +176,23 @@ public int obtenerIdUsuario(String nombre)throws Exception{
         Conexion.Desconectar();
         return idusu;
     }
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-       VBoleta bol;
-        try {
-            bol = new VBoleta();
-            jdpescritorio.add(bol);
-            String nombre=recibe.getText();
-            int i=obtenerIdUsuario(nombre);
-            po.recibe2.setText(String.valueOf(i));
-            bol.show();
-        } catch (Exception ex) {
-            Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
-
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         RegistrarTipoProducto tp=new RegistrarTipoProducto();
         jdpescritorio.add(tp);
         tp.show();
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        Cliente cli=new Cliente();
+        jdpescritorio.add(cli);
+        cli.show();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        Login l=new Login();
+        l.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -231,7 +233,6 @@ public int obtenerIdUsuario(String nombre)throws Exception{
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;

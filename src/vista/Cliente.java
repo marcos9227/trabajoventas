@@ -46,7 +46,7 @@ public class Cliente extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        txtDni1 = new javax.swing.JTextField();
+        txtID = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         btnRegistrar = new javax.swing.JButton();
         btnActualizar = new javax.swing.JButton();
@@ -55,7 +55,7 @@ public class Cliente extends javax.swing.JInternalFrame {
         txtBuscar = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
 
-        Modificar.setText("jMenuItem1");
+        Modificar.setText("Modificar");
         Modificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ModificarActionPerformed(evt);
@@ -84,7 +84,7 @@ public class Cliente extends javax.swing.JInternalFrame {
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel6.setText("ID :");
 
-        txtDni1.setEnabled(false);
+        txtID.setEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -114,7 +114,7 @@ public class Cliente extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addGap(18, 18, 18)
-                .addComponent(txtDni1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(78, 78, 78))
         );
         jPanel1Layout.setVerticalGroup(
@@ -123,7 +123,7 @@ public class Cliente extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(txtDni1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -191,11 +191,7 @@ public class Cliente extends javax.swing.JInternalFrame {
 
             }
         ));
-        tblCliente.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblClienteMouseClicked(evt);
-            }
-        });
+        tblCliente.setComponentPopupMenu(jPopupMenu1);
         jScrollPane1.setViewportView(tblCliente);
 
         txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -272,32 +268,18 @@ public class Cliente extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_txtBuscarKeyReleased
 
-    private void tblClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClienteMouseClicked
-       String nom="",ape="",dni="",id="";
-        int fila = tblCliente.getSelectedRow();
-        try {
-            if(fila==-1){
-                JOptionPane.showMessageDialog(null, "No ha seleccionado ningun dato");
-            }else{
-                nom =  (String)tblCliente.getValueAt(fila, 2);
-                ape =  (String)tblCliente.getValueAt(fila, 3);
-                dni =  (String)tblCliente.getValueAt(fila, 1);
-                id =  (String)tblCliente.getValueAt(fila, 0);
-                VBoleta.txtNombres.setText(nom+"   "+ape);
-                VBoleta.txtDni.setText(""+dni);
-                VBoleta.txtId.setText(""+id);
-                this.dispose();
-            }
-        } catch (Exception e) {
-            System.out.println("No se pudo enviar"+e.getMessage());
-        }
-    }//GEN-LAST:event_tblClienteMouseClicked
-
     private void ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModificarActionPerformed
         try {
-            
-        } catch (Exception e) {
+        int filaMod=tblCliente.getSelectedRow();
+        if(filaMod==-1){
+            JOptionPane.showMessageDialog(null, "Seleccione alguna fila");
+        }else{
+            int cod=Integer.parseInt((String) tblCliente.getValueAt(filaMod, 0));
+            BuscarClienteEditar(cod);
         }
+    } catch (Exception e) {
+            System.out.println(e.getMessage());
+    }
     }//GEN-LAST:event_ModificarActionPerformed
 public void buscarCliente(String dni) throws Exception{
             Conexion.Conectar();
@@ -317,6 +299,27 @@ public void buscarCliente(String dni) throws Exception{
             tblCliente.setModel(modelo);
             Conexion.Desconectar();
 	}
+public void BuscarClienteEditar(int cl) throws Exception{
+    Conexion.Conectar();
+            String nom="",ape="",dni="",em="";
+            int id=0;
+            String cons="select * from datos WHERE idDatos='"+cl+"'";
+            ResultSet rs = Conexion.Consultar(cons);
+            while(rs.next())
+            {
+                id=Integer.parseInt(rs.getString(1));
+                nom=rs.getString(2);
+                ape=rs.getString(3);
+                dni=rs.getString(4);
+                em=rs.getString(5);
+            }
+            txtID.setText(String.valueOf(id));
+            txtNombres.setText(nom);
+            txtApellidos.setText(ape);
+            txtDni.setText(dni);
+            txtEmail.setText(em);
+            Conexion.Desconectar();
+}
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem Modificar;
     private javax.swing.JButton btnActualizar;
@@ -335,8 +338,8 @@ public void buscarCliente(String dni) throws Exception{
     private javax.swing.JTextField txtApellidos;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtDni;
-    private javax.swing.JTextField txtDni1;
     private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtNombres;
     // End of variables declaration//GEN-END:variables
 }
