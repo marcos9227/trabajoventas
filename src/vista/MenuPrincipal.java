@@ -6,6 +6,8 @@
 
 package vista;
 
+import BaseDatos.Conexion;
+import java.sql.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,6 +17,7 @@ import java.util.logging.Logger;
  * @author FAMILIA RIVAS MAZA
  */
 public class MenuPrincipal extends javax.swing.JFrame {
+    VBoleta po;
     /**
      * Creates new form MenuPrincipal
      */
@@ -36,6 +39,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         jdpescritorio = new javax.swing.JDesktopPane();
         recibe = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -52,22 +56,37 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         recibe.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         recibe.setForeground(new java.awt.Color(255, 255, 255));
+        recibe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1446719790_gnome-session-switch.png"))); // NOI18N
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("BIENVENIDO(A):");
 
         javax.swing.GroupLayout jdpescritorioLayout = new javax.swing.GroupLayout(jdpescritorio);
         jdpescritorio.setLayout(jdpescritorioLayout);
         jdpescritorioLayout.setHorizontalGroup(
             jdpescritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jdpescritorioLayout.createSequentialGroup()
-                .addGap(620, 620, 620)
-                .addComponent(recibe, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(510, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(recibe, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jdpescritorioLayout.setVerticalGroup(
             jdpescritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jdpescritorioLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(recibe, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jdpescritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jdpescritorioLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(recibe))
+                    .addGroup(jdpescritorioLayout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel1)))
+                .addContainerGap(307, Short.MAX_VALUE))
         );
         jdpescritorio.setLayer(recibe, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jdpescritorio.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -125,9 +144,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jdpescritorio)
-                .addContainerGap())
+            .addComponent(jdpescritorio)
         );
 
         pack();
@@ -144,12 +161,25 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jdpescritorio.add(rm);
         rm.show();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
-
+public int obtenerIdUsuario(String nombre)throws Exception{
+        Conexion.Conectar();
+        String sql="select idUsuario from usuario where usu='"+nombre+"'";
+        ResultSet rs=Conexion.Consultar(sql);
+        int idusu=0;
+        if (rs.next()) {
+          idusu=Integer.parseInt(rs.getString(1));
+        }
+        Conexion.Desconectar();
+        return idusu;
+    }
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
        VBoleta bol;
         try {
             bol = new VBoleta();
             jdpescritorio.add(bol);
+            String nombre=recibe.getText();
+            int i=obtenerIdUsuario(nombre);
+            po.recibe2.setText(String.valueOf(i));
             bol.show();
         } catch (Exception ex) {
             Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
@@ -198,6 +228,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
