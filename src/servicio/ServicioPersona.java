@@ -9,4 +9,7 @@ public class ServicioPersona {
     public void eliminarPer(String cod) throws Exception{
         miPersonaDao.eliminarCliente(cod);
     }
+    public void modificarPer(Persona p,String cod) throws Exception{
+        miPersonaDao.modificarCliente(p, cod);
+    }
 }

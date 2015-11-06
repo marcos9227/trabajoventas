@@ -18,6 +18,7 @@ public class Cliente extends javax.swing.JInternalFrame {
     DefaultTableModel modelo;
     ServicioPersona sp = new ServicioPersona();
     Validador val= new Validador();
+    Persona  p;          
     public Cliente() {
         initComponents();
         this.setResizable(false);
@@ -89,14 +90,28 @@ public class Cliente extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Dni :");
 
+        txtDni.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDniActionPerformed(evt);
+            }
+        });
         txtDni.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtDniKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDniKeyTyped(evt);
             }
         });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setText("Nombres  :");
+
+        txtNombres.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNombresKeyReleased(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel3.setText("Apellidos  :");
@@ -290,9 +305,11 @@ public class Cliente extends javax.swing.JInternalFrame {
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         try{            
-            Persona  p = new Persona(txtNombres.getText(),txtApellidos.getText(),Integer.parseInt(txtDni.getText()),txtEmail.getText());      
-            val.validarDni(txtDni);
-            val.validarEmail(txtEmail);
+            p = new Persona(txtNombres.getText(),txtApellidos.getText(),Integer.parseInt(txtDni.getText()),txtEmail.getText());      
+            val.validarDni(p);
+            val.validarEmail(p);
+            val.validarLetras(p);
+            val.campoVacio(p);
             sp.registroPer(p);
             buscarCliente("");
         }catch(Exception e){
@@ -302,13 +319,15 @@ public class Cliente extends javax.swing.JInternalFrame {
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         try {
-            Conexion.Conectar();
-            String sql="UPDATE datos SET nombre = '"+txtNombres.getText()+"',apellido ='"+txtApellidos.getText()+"',dni = '"+txtDni.getText()+"',email='"+txtEmail.getText()+"' WHERE idDatos = '"+txtID.getText()+"'";
-            Conexion.Ejecutar(sql);
-            JOptionPane.showMessageDialog(null, "Actualizado");
+            p= new Persona(txtNombres.getText(),txtApellidos.getText(),Integer.parseInt(txtDni.getText()),txtEmail.getText());  
+            val.validarDni(p);
+            val.validarEmail(p);
+            val.validarLetras(p);
+            val.campoVacio(p);
+            sp.modificarPer(p,txtID.getText());
             buscarCliente("");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
+             JOptionPane.showMessageDialog(this,"No se pudo actualizar cliente");
         }
     }//GEN-LAST:event_btnActualizarActionPerformed
 
@@ -330,6 +349,7 @@ public class Cliente extends javax.swing.JInternalFrame {
             BuscarClienteEditar(cod);
             btnActualizar.setEnabled(true);
             desbloquear();
+            btnRegistrar.setEnabled(false);
         }
     } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -340,6 +360,8 @@ public class Cliente extends javax.swing.JInternalFrame {
         btnRegistrar.setEnabled(true);
         btnnuevo.setEnabled(false);
         desbloquear();
+        limpiar();
+        btnActualizar.setEnabled(false);
     }//GEN-LAST:event_btnnuevoActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -364,8 +386,20 @@ public class Cliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_EliminarActionPerformed
 
     private void txtDniKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDniKeyReleased
-        val.ingresarSoloNumeros(txtDni);
+        
     }//GEN-LAST:event_txtDniKeyReleased
+
+    private void txtDniKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDniKeyTyped
+        if(txtDni.getText().length()==8)evt.consume();
+    }//GEN-LAST:event_txtDniKeyTyped
+
+    private void txtNombresKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombresKeyReleased
+
+    }//GEN-LAST:event_txtNombresKeyReleased
+
+    private void txtDniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDniActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDniActionPerformed
 public void buscarCliente(String dni) throws Exception{
             Conexion.Conectar();
             String [] titulos={"ID","DNI","NOMBRES","APELLIDOS","EMAIL"};
