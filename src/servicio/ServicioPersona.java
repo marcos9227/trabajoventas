@@ -1,10 +1,12 @@
 package servicio;
 import entidad.Persona;
-import entidad.dao.PersonaDao;
+import modelo.dao.PersonaDao;
 public class ServicioPersona {
-    public void registroPer(Persona miPersona) throws Exception{
-        PersonaDao miPersonaDao;
-                miPersonaDao = new PersonaDao();				
-                miPersonaDao.registrarCliente(miPersona);
+    PersonaDao miPersonaDao = new PersonaDao();
+    public void registroPer(Persona miPersona) throws Exception{				
+        miPersonaDao.registrarCliente(miPersona);
+    }
+    public void eliminarPer(String cod) throws Exception{
+        miPersonaDao.eliminarCliente(cod);
     }
 }
