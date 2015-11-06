@@ -329,6 +329,7 @@ public class Cliente extends javax.swing.JInternalFrame {
             int cod=Integer.parseInt((String) tblCliente.getValueAt(filaMod, 0));
             BuscarClienteEditar(cod);
             btnActualizar.setEnabled(true);
+            desbloquear();
         }
     } catch (Exception e) {
             System.out.println(e.getMessage());
