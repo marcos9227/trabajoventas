@@ -25,6 +25,8 @@ public class Clientes extends javax.swing.JInternalFrame {
      */
     public Clientes() {
         initComponents();
+        this.setResizable(false);
+        this.setSize(489, 261);
         try {
             buscarClientes("");
         } catch (Exception ex) {
@@ -41,16 +43,14 @@ public void buscarClientes(String pro)
             ResultSet rs=Conexion.Consultar(sql);
             while(rs.next()){
                 registros[0]=rs.getString(1);
-                registros[1]=rs.getString(2);
-                registros[2]=rs.getString(3);
-                registros[3]=rs.getString(4);
+                registros[1]=rs.getString(4);
+                registros[2]=rs.getString(2);
+                registros[3]=rs.getString(3);
+                registros[4]=rs.getString(5);
                 
                 model.addRow(registros);      
                 }
             tbclientes.setModel(model);
-            tbclientes.getColumnModel().getColumn(0).setPreferredWidth(150);
-            tbclientes.getColumnModel().getColumn(1).setPreferredWidth(300);
-            tbclientes.getColumnModel().getColumn(2).setPreferredWidth(100);
             Conexion.Desconectar();
 	}
     /**
@@ -87,7 +87,7 @@ public void buscarClientes(String pro)
 
         jButton1.setText("Mostrar Todo");
 
-        jButton2.setText("Registrar Cliente");
+        jButton2.setText("Registrar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -118,7 +118,7 @@ public void buscarClientes(String pro)
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
@@ -126,7 +126,7 @@ public void buscarClientes(String pro)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton1)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2))
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -140,8 +140,7 @@ public void buscarClientes(String pro)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

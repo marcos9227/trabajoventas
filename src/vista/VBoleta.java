@@ -21,6 +21,7 @@ public class VBoleta extends javax.swing.JInternalFrame {
     public VBoleta() throws Exception {
         initComponents();
         this.setLocation(350,20);
+        this.setResizable(false);
         txtFecha.setText(fecha());
         numboleta();
     }
@@ -241,6 +242,7 @@ public class VBoleta extends javax.swing.JInternalFrame {
         txtNombres.setDisabledTextColor(new java.awt.Color(255, 0, 0));
         txtNombres.setEnabled(false);
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cliente.png"))); // NOI18N
         jButton1.setText("...");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -264,6 +266,7 @@ public class VBoleta extends javax.swing.JInternalFrame {
         txtFecha.setDisabledTextColor(new java.awt.Color(255, 0, 0));
         txtFecha.setEnabled(false);
 
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/productos.png"))); // NOI18N
         jButton2.setText("Buscar Producto");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -299,14 +302,14 @@ public class VBoleta extends javax.swing.JInternalFrame {
                     .addComponent(jLabel10))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel3Layout.createSequentialGroup()
                             .addComponent(txtNombres, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
-                            .addComponent(jButton1))
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                             .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGap(68, 68, 68)
                             .addComponent(jButton2)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -327,7 +330,7 @@ public class VBoleta extends javax.swing.JInternalFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(txtNombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -356,6 +359,7 @@ public class VBoleta extends javax.swing.JInternalFrame {
         ));
         jScrollPane3.setViewportView(tblBoleta);
 
+        btnCalcular.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/calcular.png"))); // NOI18N
         btnCalcular.setText("Calcular");
         btnCalcular.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -363,6 +367,7 @@ public class VBoleta extends javax.swing.JInternalFrame {
             }
         });
 
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/delete.png"))); // NOI18N
         btnEliminar.setText("Eliminar ");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -370,6 +375,7 @@ public class VBoleta extends javax.swing.JInternalFrame {
             }
         });
 
+        btnVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/venta.png"))); // NOI18N
         btnVenta.setText("Realizar venta");
         btnVenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -397,7 +403,7 @@ public class VBoleta extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(36, 36, 36)
                                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addContainerGap()
@@ -409,8 +415,8 @@ public class VBoleta extends javax.swing.JInternalFrame {
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(btnCalcular, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(btnVenta, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE))))))
-                        .addGap(0, 2, Short.MAX_VALUE))
+                                            .addComponent(btnVenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel13)
@@ -442,19 +448,11 @@ public class VBoleta extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
                     .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Clientes cl= new Clientes();
-        MenuPrincipal.jdpescritorio.add(cl);
-        MenuVendedor.jdpescritorio1.add(cl);
-        cl.toFront();
-        cl.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
        Productos p;
@@ -501,8 +499,7 @@ public class VBoleta extends javax.swing.JInternalFrame {
                    capcod=VBoleta.tblBoleta.getValueAt(i,0).toString();
                    capcant=VBoleta.tblBoleta.getValueAt(i,4).toString();  
                    sp.desStock(capcod, capcant);
-                   }
-                   JOptionPane.showMessageDialog(null, "Venta Realizada");
+                   }                   
                    } catch (Exception ex) {
                        Logger.getLogger(Boleta.class.getName()).log(Level.SEVERE, null, ex);
                    }
@@ -519,6 +516,14 @@ public class VBoleta extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Verifica Datos ");
         }
     }//GEN-LAST:event_btnVentaActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Clientes cl= new Clientes();
+        MenuPrincipal.jdpescritorio.add(cl);
+        MenuVendedor.jdpescritorio1.add(cl);
+        cl.toFront();
+        cl.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
     public static String fecha(){
         Date fecha= new Date();
         SimpleDateFormat formatofecha= new SimpleDateFormat("YYYY-MM-dd");
