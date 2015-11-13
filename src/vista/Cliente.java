@@ -308,32 +308,27 @@ public class Cliente extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        try{            
+        try{ 
+            val.validarLetras(txtApellidos.getText());
+            val.validarLetras(txtNombres.getText());
             p = new Persona(txtNombres.getText(),txtApellidos.getText(),Integer.parseInt(txtDni.getText()),txtEmail.getText());      
-            val.validarDni(p);
-            val.validarEmail(p);
-            val.validarLetras(p);
-            val.campoVacio(p);
+            val.validarCliente(p);        
             sp.registroPer(p);
             buscarCliente("");
-            limpiar();
-            bloquear();
         }catch(Exception e){
             JOptionPane.showMessageDialog(this,"No se pudo registrar al cliente");
-        }   
+        }     
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         try {
-            p= new Persona(txtNombres.getText(),txtApellidos.getText(),Integer.parseInt(txtDni.getText()),txtEmail.getText());  
-            val.validarDni(p);
-            val.validarEmail(p);
-            val.validarLetras(p);
-            val.campoVacio(p);
+            val.validarLetras(txtApellidos.getText());
+            val.validarLetras(txtNombres.getText());
+            p = new Persona(txtNombres.getText(),txtApellidos.getText(),Integer.parseInt(txtDni.getText()),txtEmail.getText());      
+            val.validarCliente(p);        
+            sp.registroPer(p);
             sp.modificarPer(p,txtID.getText());
             buscarCliente("");
-            limpiar();
-            bloquear();
         } catch (Exception e) {
              JOptionPane.showMessageDialog(this,"No se pudo actualizar cliente");
         }
