@@ -56,4 +56,25 @@ public class ProductoDao {
         } catch (Exception e) {
         }
     }
+        public String obNOmbre1(int me)throws Exception{
+         Conexion.Conectar();
+        String cons1="select * from unidadmedida WHERE idMedida='"+me+"'";
+            ResultSet rs1 = Conexion.Consultar(cons1);
+            String nombre1="";
+            if (rs1.next()) {
+                nombre1=rs1.getString(2);
+            }
+            System.out.println(nombre1);
+            return nombre1;
+    }
+     public String obNOmbre2(int tipo)throws Exception{
+         Conexion.Conectar();
+        String cons2="select * from tipoproducto WHERE idTipoProd='"+tipo+"'";
+            ResultSet rs2 = Conexion.Consultar(cons2);
+            String tprod="";
+            if (rs2.next()) {
+                tprod=rs2.getString(2);
+            }
+            return tprod;
+    }
 }

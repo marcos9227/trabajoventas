@@ -319,7 +319,7 @@ public class VProveedor extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnnuevoActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-         bloquear();
+        bloquear();
         limpiar();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
@@ -372,6 +372,8 @@ public class VProveedor extends javax.swing.JInternalFrame {
             val.validarProveedor(pv);
             spv.registroProv(pv);
             buscarProveedor("");
+            limpiar();
+            bloquear();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this,"No se pudo registrar ");
         }

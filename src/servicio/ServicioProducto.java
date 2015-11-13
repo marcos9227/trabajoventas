@@ -16,4 +16,16 @@ public class ServicioProducto {
         ProductoDao miProductoDao= new ProductoDao();
             miProductoDao.descontarStock(cod, can);
     }
+    public String obtener1(int nombre)throws Exception{
+        ProductoDao miProductoDao;
+                miProductoDao = new ProductoDao();				
+                String nombre1=miProductoDao.obNOmbre1(nombre);
+                return nombre1;
+    }
+    public String obtener2(int tipo)throws Exception{
+        ProductoDao miProductoDao;
+                miProductoDao = new ProductoDao();				
+                String tprod=miProductoDao.obNOmbre2(tipo);
+                return tprod;
+    }
 }

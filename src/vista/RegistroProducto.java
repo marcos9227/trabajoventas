@@ -128,14 +128,16 @@ public class RegistroProducto extends javax.swing.JInternalFrame {
                 img=rs.getString(7);
                  ti=Integer.parseInt(rs.getString(8));
             }
+            String nombre=servicio.obtener1(me);
+            String tprod=servicio.obtener2(ti);
             txtcodigo.setText(String.valueOf(cod));
             txtnombre.setText(nom);
             txtprecio.setText(String.valueOf(pre));
             txtstock.setText(String.valueOf(stock));
             txtcontenido.setText(String.valueOf(cont));
-            txtmedida.setSelectedItem(me);
+            txtmedida.setSelectedItem(nombre);
             txtimagen.setText(img);
-            txttpro.setSelectedItem(ti);
+            txttpro.setSelectedItem(tprod);
             Conexion.Desconectar();
     }
     public void buscarProducto(String pro) 
